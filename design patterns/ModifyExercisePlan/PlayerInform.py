@@ -1,10 +1,17 @@
+#builder pattern
+
+#import PositionSpacInfo
+
 class Player:
-    def __init__(self,height,weight,muscleMass,position,ankleWeakness):
+    def __init__(self,height,weight,muscleMass,position,injuryBool):
         self.height = height
         self.weight = weight
         self.muscleMass = muscleMass
         self.position = position
-        self.ankleWeakness = ankleWeakness
+        self.injury = injuryBool
+
+    def getInfo(self):
+        return (self.position,self.height,self.weight,self.muscleMass,self.injury)
 
 class PlayerBuilder:
     def __init__(self):
@@ -12,22 +19,32 @@ class PlayerBuilder:
         self.weight = None
         self.muscleMass = None
         self.position = None
-        self.ankleWeakness = None
+        self.injury = None
 
     def setHeight(self, height):
         self.height = height
+        return self
 
     def setWeight(self,weight):
         self.weight = weight
+        return self
 
     def setmuscleMass(self,muscleMass):
         self.muscleMass = muscleMass
-
+        return self
+    
     def setPosition(self,position):
         self.position = position
-
-    def setAnkleWeakness(self,ankleWeakness):
-        self.ankleWeakness = ankleWeakness
-
+        return self
+    
+    def setInjury(self,injuryBool):
+        self.injury = injuryBool
+        return self
+    
     def build(self):
-        player = Player(self.height,self.weight,self.muscleMass,self.position,self.ankleWeakness)
+        player = Player(self.height,self.weight,self.muscleMass,self.position,self.injury)
+        return player
+
+player = PlayerBuilder().setHeight(170).setWeight(60).setmuscleMass(30).setPosition("Guard").setInjury(False).build()
+
+print(player.getInfo())

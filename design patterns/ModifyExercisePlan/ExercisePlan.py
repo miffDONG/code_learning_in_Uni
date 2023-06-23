@@ -1,110 +1,104 @@
-#Templete pattern
-#import PlayerInform
 
 class BasicPlan:
     def __init__(self):
-        self.warmUpList = ['High knees','Butt kicks', 'Lunges Leg Swings','Jogging in Place']
-        self.mainExList = ['Lay up 20/20','Three steps', 'Sprint in Place' , 'Dribbel drill' , 'strategy scrimmage' ]
-        self.coolDownList = ['Hamstring Stretches','Calf Stretches','Hip Flexor Stretches','Static Stretches']
+        self.warmUpList = ['High knees', 'Butt kicks', 'Lunges Leg Swings', 'Jogging in Place']
+        self.mainExList = ['Lay up 20/20', 'Three steps', 'Sprint in Place', 'Dribbel drill', 'strategy scrimmage']
+        self.coolDownList = ['Hamstring Stretches', 'Calf Stretches', 'Hip Flexor Stretches', 'Static Stretches']
+        self.addList = ''
+        self.planText = ''
+
 
     def exercisePlan(self):
-        self.warmUp()
-        self.mainEx()
-        self.coolDown()
-        self.addPlan()
-        self.done()
-    
+        self.planText = ""
+        self.planText += self.warmUp()
+        self.planText += self.mainEx()
+        self.planText += self.coolDown()
+        self.planText += self.addPlan()
+        return self.planText
+
     def warmUp(self):
-        print("\nwarm up start")
+        result = "\nWarm-up start\n"
         for i in range(len(self.warmUpList)):
-            print(f" {i+1}. {self.warmUpList[i]} ",end='')
+            result += f"{i+1}. {self.warmUpList[i]}\n"
+        return result
 
-    
     def mainEx(self):
-        print("\nmain exercise start")
+        result = "\nMain exercise start\n"
         for i in range(len(self.mainExList)):
-            print(f" {i+1}. {self.mainExList[i]}",end='')
+            result += f"{i+1}. {self.mainExList[i]}\n"
+        return result
 
-    
     def coolDown(self):
-        print("\ncool down start")
+        result = "\nCool-down start\n"
         for i in range(len(self.coolDownList)):
-            print(f" {i+1}. {self.coolDownList[i]}",end='')
+            result += f"{i+1}. {self.coolDownList[i]}\n"
+        return result
 
-    def done(self):
-        print("You have carried out all your plans.")
-    
     def addPlan(self):
-        pass
+        return self.addList
+
+    def getPlanText(self):
+        return self.getPlanText
 
 class BodyPlan(BasicPlan):
     def __init__(self):
         super().__init__()
-        #default = 전신운동 / use also weight loss or weight up
-        self.healthPlan = ['Squat','Bench press','Shoulder press','Deadlift']
+        self.addList = None
+
+    def setWholeBody(self):
+        self.addList = ['Squat','Bench press','Shoulder press','Deadlift']
+        return self
     
     def setForJump(self):
-        self.healthPlan = ['Squat', 'Lunge', 'Box Jump', 'Step Up' , 'Dumbbel Vertical Leap']
-
+        self.addList = ['Squat', 'Lunge', 'Box Jump', 'Step Up' , 'Dumbbel Vertical Leap']
+        return self
     def setForShoot(self):
-        self.healthPlan = ['Deadlift' , 'Pull up' , 'Shoulder Press', 'Side Lateral Raise','Arm Curl']
-
+        self.addList = ['Deadlift' , 'Pull up' , 'Shoulder Press', 'Side Lateral Raise','Arm Curl']
+        return self
+    
     def setForWeightUp(self):
-        self.healthPlan.append(" you have to eat more ")
-
+        self.addList = " you have to eat more "
+        return self
+    
     def addPlan(self):
-        # print("\nthis plan is added for you. Do this plan after Basic Plan")
-        for i in range(len(self.healthPlan)):
-            print(f" {i+1}. {self.healthPlan[i]}",end='')
-        # print("\nfor your performance\n")
+        result = "\nPlus Plan start\n"
+        for i in range(len(self.addList)):
+            result += f" {i+1}. {self.addList[i]}\n"
+        return result
+
 
 class SkillPlan(BasicPlan):
     def __init__(self):
         super().__init__()
-        self.skillPlan = None
+        self.addList = None
 
     def setDribbel(self):
-        self.skillPlan = ['Cone Dribble and Finish', 'Two-Ball Dribble', '1-on-1 Dribble Attack','Dribble Combo Moves']
-
+        self.addList = ['Cone Dribble and Finish', 'Two-Ball Dribble', '1-on-1 Dribble Attack','Dribble Combo Moves']
+        return self
     def setShoot(self):
-        self.skillPlan = ['Spot Shooting', 'Range Shooting', 'Game-like Shooting']
+        self.addList = ['Spot Shooting', 'Range Shooting', 'Game-like Shooting']
+        return self
 
     def addPlan(self):
-        # print("\ntouch the ball more. get used to")
-        for i in range(len(self.skillPlan)):
-            print(f" {i+1}. {self.skillPlan[i]}",end='')
-        # print("\nfor your performance\n")
+        result = "\nPlus Plan start\n"
+        for i in range(len(self.addList)):
+            result += f" {i+1}. {self.addList[i]}\n"
+        return result
 
     
 class injuryPlan(BasicPlan):
     def __init__(self):
         super().__init__()
-        self.rehabilitation = None
-
-    def setJoint(self):
-        self.rehabilitation = '\ngo to hospital and get professional treatment'
 
     def addPlan(self):
-        print("\nfocus on your recovery")
-        print(self.rehabilitation)
-        print("The most important thing is not to be injured\n")
+        result = "\nfocus on your recovery\n"
+        result += '\ngo to hospital and get professional treatment\n'
+        result += "\nThe most important thing is not to be injured\n"
+        return result
 
     def exercisePlan(self):
-        self.addPlan()
-
-basic = BasicPlan()
-basic.exercisePlan()
-
-print('\n\n')
-weUp = BodyPlan()
-weUp.exercisePlan()
-print('\n\n')
-sk = SkillPlan()
-sk.setShoot()
-sk.exercisePlan()
-print('\n\n') 
-inj = injuryPlan()
-inj.setJoint()
-inj.exercisePlan()
+        self.planText = ""
+        self.planText +=self.addPlan()
+        return self.planText
 
 

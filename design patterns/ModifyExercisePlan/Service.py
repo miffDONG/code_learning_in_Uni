@@ -1,68 +1,76 @@
-#facade pattern
-
 import ExercisePlan
-import PlayerInform
+from PlayerInform import Observer, Player 
 import PositionSpacInfo
-import Observer
 
 class SetPlan:
     def __init__(self):
-        self.plan = ExercisePlan.BasicPlan() 
-        self.position = None
-        self.height = None
-        self.weight = None
-        self.muscleMass = None
-        self.injury = None
-        self.ballControl = None
-        self.goalWeight = None
-        self.goalMuscleMass = None
-        self.gapWeight = None
-        self.gapMuscleMass = None
-        self.state = None
+        self.plan = None
+        self.controlBodyPlan = 0
+        self.controlSkillPlan = 0
 
-
-    def condition(self):
-        self.position,self.height,self.weight,self.muscleMass,self.injury,self.injury = PlayerInform.Player.getInfo()
-
-    def setGoalState(self):
-        self.goalWeight,self.goalMuscleMass,self.gapWeight,self.gapMuscleMass = PositionSpacInfo.PositionSpacInfo.GetSpac()
-
-    def controlAddClass(self):
-        if self.injury == False:
-            if(abs(self.gapMuscleMass)>3 or abs(self.gapWeight)>4):
-                self.plan = ExercisePlan.BodyPlan()
+    def controlAddPlan(self,player,goal):
+        if player.injury == False:
+            if(abs(goal.gapMuscleMass)>2 or abs(goal.gapWeight)>4):
+                self.plan = ExercisePlan.BodyPlan() 
+                self.setBodyPlan()
             else:
-                if(self.ballControl == False):
+                #ballControl능력이 있으면 True
+                if(player.ballControl == False):
                     self.plan = ExercisePlan.SkillPlan()
+                    self.setSkillPlan()
                 else:
-                    pass
+                    self.plan = ExercisePlan.BasicPlan()
         else:
             self.plan = ExercisePlan.injuryPlan()
+        
+        return self
 
     def setBodyPlan(self):
-        
-        if self.gapMuscleMass>4:
-            # 몸무게, 근육 부족 
-            if self.gapWeight>4:
+        if self.controlBodyPlan%3 == 0:
+            self.plan.setWholeBody()
             
-            #근육 부족
-            else: 
-
+        elif self.controlBodyPlan%3 == 1:
+            self.plan.setForJump()
         else:
-            if 
-            self.plan.addPlan()
+            self.plan.setForShoot()
 
+        self.controlBodyPlan +=1
+        return self
 
-class Service:
+    def setSkillPlan(self):
+        if self.controlSkillPlan%2 == 0:
+            self.plan.setDribbel()
+        else:
+            self.plan.setShoot()
+
+        self.controlSkillPlan +=1
+        return self
+
+class Service(Observer):
     def __init__(self):
         self.player = None
-        self.Goal = None
+        self.goal = None
         self.plan = None  
-        # observer 보류 self.trainer = 
 
-    def genPlayer(self,height,weight,muscleMass,Position,Injury):
-        self.player = PlayerInform.PlayerBuilder.setHeight(height).setWeight(weight).setmuscleMass(muscleMass).setPosition(Position).setInjury(Injury).build()
-        self.Goal = PositionSpacInfo.GoalBuilder.GoalBuilder().setHeight(height).setWeight(weight).setMuscleMass(muscleMass).setPosition(Position).buildGoal()
-        #self.plan = ExercisePlan.BasicPlan() 
+    def genPlayer(self, height, weight, muscleMass, position, injury, ballControl):
+        self.player = Player(height, weight, muscleMass, position, injury, ballControl)
+        self.player.attach(self)
+        self.plan= SetPlan()
+        self.update()
+        return self
 
+    def modPlayer(self, weight, muscleMass, position, injury, ballControl):
+        self.player.setWeight(weight)
+        self.player.setMuscleMass(muscleMass)
+        self.player.setPosition(position)
+        self.player.setInjury(injury)
+        self.player.setBallControl(ballControl)
+        return self
+
+    def update(self):
+        playerInfo = self.player.getInfo()
+        position, height, weight, muscleMass, injury, ballControl = playerInfo
+        self.goal = PositionSpacInfo.GoalBuilder().setHeight(height).setWeight(weight).setMuscleMass(muscleMass).setPosition(position).buildGoal()
+        self.plan.controlAddPlan(self.player, self.goal)
+        return self
     

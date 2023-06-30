@@ -9,7 +9,7 @@ def levenshteinDistance(s1,s2):
             if s1[x-1] == s2[y-1]:
                 arr[x][y] = arr[x-1][y-1]
             else:
-                arr[x][y] = min(arr[x-1][y]+1,arr[x-1][y-1]+2,arr[x][y-1]+1)
+                arr[x][y] = min(arr[y-1]+1)
             
     for r in arr:
         print(r)

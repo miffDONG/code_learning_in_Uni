@@ -55,6 +55,13 @@ def KlevenshteinDistance(s1,s2):
 
     return arr[len(str1)][len(str2)]
 
+
+s1 = '김현동'
+s2 = '김삼순'
+
+KlevenshteinDistance(s1,s2)
+
+
 # s1 = 'cake'
 # s2 = 'cat'
 

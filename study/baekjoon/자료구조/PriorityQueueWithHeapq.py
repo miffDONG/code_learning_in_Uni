@@ -24,3 +24,20 @@ class PriorityQueue:
             raise Exception("Priority Queue is empty")
 
         return -self.items[0]
+
+n = int(input())
+pq = PriorityQueue()
+
+for _ in range(n):
+    command = input()
+    if command.startswith("push"):
+        x = int(command.split()[1])
+        pq.push(x)
+    elif command == "pop":
+        print(pq.pop())
+    elif command == "size":
+        print(pq.size())
+    elif command == "empty":
+        print(1 if pq.empty() else 0)
+    else:
+        print(pq.top())

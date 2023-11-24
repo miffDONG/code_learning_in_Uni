@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>calculator</title>
+</head>
+<body>
+    <script type="text/javascript">
+        //함수 선언 
+        //폼에서 입력된 값을 백에 넘겨줌 .value
+        //documentById("id") id에 들어갈 값은 입력 값을 넘겨받는 form id
+        //form에서 출력값을 주는 동적인 창도 input 타입으로 넘겨줌. 
+        //input이 단지 입력값을 받는것이 아닌 백 프로트를 넘나드는 정보를 다루는 창으로 보임
+        
+        function add(){
+            var a = parseInt(document.getElementById("op1").value);
+            var b = parseInt(document.getElementById("op2").value);
+            document.getElementById("result").value = a+b;
+        }
+    </script>
+    
+    <form>
+        <input id="op1" type="text" size="2"/> +
+        <input id="op2" type="text" size="2"/>
+        <input type="button" value="=" onclick="add();"/>
+        <input id="result" type="text" size="2"/>
+    </form>
+</body>
+</html>

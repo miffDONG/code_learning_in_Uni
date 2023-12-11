@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>    
+        td{ height: 100px;
+            width: 100px;
+            text-align:center;
+            background-image: url(media/mark_null.png);
+            border-collapse: collapse;
+            border: 3px solid green;
+        }
+
+    </style>
+    <title>mid-2</title>
+</head>
+<body>
+    
+    <script type="text/javascript">
+        function changeO(h, r) {
+            var he=document.getElementById(h).value;
+            var re=document.getElementById(r).value;
+            var id = he+re
+            document.getElementById(id).style.backgroundImage="url('media/mark_o.png')";
+            document.getElementById(id).style.backgroundSize="103px";
+        }
+        function changeX(h, r) {
+            var he=document.getElementById(h).value;
+            var re=document.getElementById(r).value;
+            var id = he+re
+            document.getElementById(id).style.backgroundImage="url('media/mark_x.png')";
+            document.getElementById(id).style.backgroundSize="103px";
+        }
+    </script>
+    <table border="1">
+        <script type="text/javascript">
+            document.write('<caption style="font-size: 170%;font-weight: bold;">틱택토</caption><br/>');
+            document.write('<caption style="font-size: 110%;font-weight: bold;">201901208 김현동</caption>');
+            document.write('<tr><td id="11"></td><td id="12"></td><td id="13"></td></tr>');
+            document.write('<tr><td id="21"></td><td id="22"></td><td id="23"></td></tr>');
+            document.write('<tr><td id="31"></td><td id="32"></td><td id="33"></td></tr>');
+        </script>
+    </table>
+    <form>
+        가로 <input id="r" type="text" size="8"/>
+        세로 <input id="h" type="text" size="8"/>
+        <input id="o" type="button" value="o" onclick="changeO('h','r')"/>
+        <input type="button" value="x" onclick="changeX('h','r')"/>
+    </form>    
+</body>
+</html>

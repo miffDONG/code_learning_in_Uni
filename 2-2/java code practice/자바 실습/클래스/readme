@@ -1,0 +1,36 @@
+클라스 개념
+
+instance : 객체 생성해서 사용. 일반적으로 사용하는 class 필드
+
+static : 클래스에 고정된 멤버. Main에서 별도로 객체 생성 없이 사용 가능.
+
+singleton : 전체 필드에서 한 번만 생성 가능. 객체를 class 안에서 생성. 
+            
+final : 초기값이 최종값이 돼서 수정 불가.
+
+getter setter : 객체의 무결성이 깨지는 것을 막기 위해
+                private로 변수 접근제한. setter getter로 접근 가능성 열어둠.
+#################################################################
+상속 extends - 매개변수 다형성 : 부모 class 객체를 사용자 함수에 받도록 하고.
+               매개변수 입력은 자식 class로 함. 수정 없이 부모 메소드 사용 가능.
+
+            - abstract class : 오로지 부모 class의 역할만 수행. 메소드를 수행하기 위한 목적이 아님.
+                                객체 생성을 못함.
+
+interface implements - 인터페이스 다형성 : 
+                     - interface들 끼리 묶을 수 있음. 
+                     public interface InterfaceC extends InterfaceA, InterfaceB
+                     InterfaceC를 implements 해서 A,B,C 메소드 다 구체화 가능.
+instanceof - 다형성 검사. 참조하고 있는게 뭔지.
+
+중첩 클래스 잘 모르겠음. 클래스 안에 클래스를 정의하는거.
+중첩 클래스 내부 클래스 == 멤버 클래스
+멤버 클래스 사용 제한.
+static끼리, 제한을 안한 것 끼리 필드 사용 가능. 
+
+#############################################################
+컬렉션
+
+list - ArrayList, vector, linkedList
+set - 인덱스 x, 저장 순서 x, 마치 주머니에서 구슬 꺼내는 듯한.
+      iterator 사용해서 반복적 꺼내야 됌.

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>수도권 날씨예보</title>
+</head>
+<body>
+	<h2>수도권 날씨예보</h2>
+	<form method="POST" action="get_weather1.php">
+		<select name="city" value="과천">
+			<option value="과천" selected>과천</option>
+			<option value="서울">서울</option>
+			<option value="성남">성남</option>
+			<option value="수원">수원</option>
+			<option value="용인">용인</option>
+			<option value="인천">인천</option>
+		</select>
+		<span>의 날씨는?</span>
+		<input type="submit" value="확인">
+	</form>
+</body>
+</html>

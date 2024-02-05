@@ -51,12 +51,14 @@ class DoublyLinkedList:
     def insert(self,node,new_data):
         if node == self.end():
             self.push_back(new_data)
+
         elif node == self.begin():
             self.push_front(new_data)
+        
         else:
             new_node = Node(new_data)
             new_node.prev = node.prev
-            new_node.next = node.next
+            new_node.next = node
             node.prev.next = new_node
             node.prev = new_node
 
@@ -67,32 +69,31 @@ class DoublyLinkedList:
         return self.tail
 
     
-n,m = map(int,input().split())
+n,m = tuple(map(int,input().split()))
 str = input()
-DL = DoublyLinkedList()
 
+DL = DoublyLinkedList()
 for i in str:
     DL.push_back(i)
 
 iter = DL.end()
 
-for i in range(m):
-    s = sys.stdin.readline()
-    if s[0] == "L":
+for _ in range(m):
+    s = input()
+    if s.startswith("L"):
         if iter != DL.begin():
             iter = iter.prev
 
-    elif s[0] == "R":
+    elif s.startswith("R"):
         if  iter != DL.end():
             iter = iter.next
     
-    elif s[0] == "D":
+    elif s.startswith("D"):
         if iter != DL.end():
             iter = DL.erase(iter)
 
-    elif s[0] == "P":
+    else:
         DL.insert(iter,s[2])
-        iter.prev
 
 
 iter = DL.begin()

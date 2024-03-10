@@ -19,7 +19,7 @@ miffDong의 대학시절을 담은 repo 입니다.
 
 ### 경진대회
 • 2023 GBT Hackathon challenge 우수상
-• 2024 LGaimers phase 3 진출 (phase 2 경진대회. log 데이터 활용. 39위/844팀 / 진행중) 
+\n• 2024 LGaimers phase 3 진출 (phase 2 경진대회. log 데이터 활용. 39위/844팀 / 진행중) 
 
 ### 개발
 • 데청캠 [2023]자연어처리기반 딥러닝기술 융합과정 수료 (snail : 아동 인지능력 검사 서비스)

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Text Extraction with Python</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image to Text Extraction with Python</h1>
+    <p>This document explains how to extract text from images using Python. The process involves loading an image, selecting a region, processing the image, and then performing Optical Character Recognition (OCR) to extract the text.</p>
+
+    <h2>1. Project Overview</h2>
+    <p>The goal is to extract text from a selected region of an image using OpenCV for image processing and Tesseract OCR for text extraction.</p>
+
+    <h2>2. Code Structure</h2>
+    <ul>
+        <li><strong>Loading the Image</strong>: Use OpenCV to read the image.</li>
+        <li><strong>Mouse Event Handling</strong>: Click to select a rectangular region.</li>
+        <li><strong>Image Processing</strong>: Transform and preprocess the selected region.</li>
+        <li><strong>OCR Processing</strong>: Extract text from the processed image using Tesseract OCR.</li>
+    </ul>
+
+    <h2>3. Loading the Image</h2>
+    <pre><code>import cv2
+import numpy as np
+import pytesseract
+
+TESSERACT_PATH = "C:/Program Files/Tesseract-OCR/tesseract.exe"  # Tesseract 설치 경로
+imgpath = './images/2-1.jpg'  # 이미지 파일 경로
+win_name = "Image To Text"  # OpenCV 창 이름
+img = cv2.imread(imgpath)  # 이미지 읽어오기
+    </code></pre>
+
+    <h2>4. Mouse Event Handling</h2>
+    <pre><code>def onMouse(event, x, y, flags, param):
+    global points, img
+    if event == cv2.EVENT_LBUTTONDOWN:  # 마우스 왼쪽 버튼 클릭 시
+        points.append((x, y))  # 클릭한 좌표를 points 리스트에 추가
+        cv2.circle(img, (x, y), 5, (0, 255, 0), -1)  # 클릭한 위치에 초록색 원 그리기
+        cv2.imshow(win_name, img)  # 이미지 업데이트
+        if len(points) == 4:  # 네 개의 점이 선택되면
+            # 네 개의 점을 연결하여 사각형 그리기
+            cv2.line(img, points[0], points[1], (255, 0, 0), 2)
+            cv2.line(img, points[1], points[2], (255, 0, 0), 2)
+            cv2.line(img, points[2], points[3], (255, 0, 0), 2)
+            cv2.line(img, points[3], points[0], (255, 0, 0), 2)
+            cv2.imshow(win_name, img)  # 이미지 업데이트
+            cv2.waitKey(0)  # 키 입력 대기
+            cv2.destroyAllWindows()  # 모든 OpenCV 창 닫기
+            ImgProcessing()  # 이미지 처리 함수 호출
+            text = GetOCR()  # OCR 함수 호출하여 텍스트 추출
+            print(text)  # 추출된 텍스트 출력
+    </code></pre>
+
+    <h2>5. Image Processing</h2>
+    <pre><code>def ImgProcessing():
+    global img, points
+    pts1 = np.float32(points)  # 선택한 네 개의 점을 float32 형으로 변환
+    width = max(abs(points[1][0] - points[0][0]), abs(points[2][0] - points[3][0]))
+    height = max(abs(points[3][1] - points[0][1]), abs(points[2][1] - points[1][1]))
+    pts2 = np.float32([[0, 0], [width, 0], [width, height], [0, height]])  # 변환할 사각형의 좌표
+    matrix = cv2.getPerspectiveTransform(pts1, pts2)  # 원근 변환 행렬 계산
+    img = cv2.warpPerspective(img, matrix, (int(width), int(height)))  # 원근 변환 적용
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # 이미지를 그레이스케일로 변환
+    _, binary = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY)  # 이진화
+    img = cv2.bitwise_not(binary)  # 색상 반전
+    </code></pre>
+
+    <h2>6. OCR Processing</h2>
+    <pre><code>def GetOCR():
+    global img
+    pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH  # Tesseract 실행 파일 경로 설정
+    text = pytesseract.image_to_string(img, lang='kor+eng')  # 이미지에서 텍스트 추출
+    return text
+    </code></pre>
+
+    <h2>7. Running the Code</h2>
+    <pre><code>cv2.imshow(win_name, img)  # 이미지 출력
+cv2.setMouseCallback(win_name, onMouse)  # 마우스 콜백 함수 설정
+cv2.waitKey(0)  # 입력 대기
+cv2.destroyAllWindows()  # 모든 OpenCV 창 닫기
+    </code></pre>
+
+    <h2>8. Results</h2>
+    <p>After running the script, the image will be displayed, and you can click on four points to define a rectangular region. The selected area will be processed, and the text will be extracted and displayed.</p>
+
+    <h2>9. Questions & Answers</h2>
+    <p>If you have any questions or need further clarification, feel free to ask.</p>
+</body>
+</html>

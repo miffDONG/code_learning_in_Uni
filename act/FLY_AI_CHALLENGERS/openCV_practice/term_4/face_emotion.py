@@ -38,7 +38,7 @@ while True:
             pinch_threshold = 0.05
 
             if thumb_index_distance < pinch_threshold:
-                pyautogui.press('space')
+                pyautogui.press('space')             
                 print("Space bar pressed")
 
     # 결과를 화면에 표시
